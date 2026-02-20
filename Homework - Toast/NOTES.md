@@ -20,6 +20,7 @@ Then we repeat, taking a random state, etc. until we find the goal state.
 Description of how algo works:
 - It's like BFS, but always picking the shortest total distance from start node to neighboring, unchecked nodes
   - We use min heaps. They allow us to sort by nodes by distance (from min to max)
+  - We go through all nodes and their shortest paths, ignoring longer paths, till we finally reach our goal node.
 
 - We start from start state, and initialise our min heap
 - We pop the nearest distanced node from heap
