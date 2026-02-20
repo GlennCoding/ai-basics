@@ -9,29 +9,36 @@ Then we repeat, taking a random state, etc. until we find the goal state.
 # BFS
 
 - frontier -> stores nodes to be checked from the beginning
-- Then for each step, it picks the first node
+- Then for each step, it pops the first node
   - Goes through all actions and checks wether one of the states is the goal state
   - Add each of these states to the frontier
-  - After all 4 actions are checked, it removes the first node
   - It saves checked node to visited set
+  - Repeat loop
 
 # Shortest Toast Time Search (via Dijkstra's Algorithm)
 
+Description of how algo works:
+- It's like BFS, but always picking the shortest total distance from start node to neighboring, unchecked nodes
+  - We use min heaps. They allow us to sort by nodes by distance (from min to max)
+
+- We start from start state, and initialise our min heap
+- We pop the nearest distanced node from heap
+- We check if that node has goal state -> if yes, we found the shortest path
+  - If it's popped from minheap, it means there can't be any other path that is shorter.
+- If not, we get the neighboring states via state_transition for each action
+  - We check if any of the neighboring states have a smaller distance than the already documented ones for themselves
+    - If yes, add them to heap and save their distance and prev node
+  -> Like this we always add new neighboring states to the minheap or we updated their distance and prev node, if we've found a shorter distance in the graph
+
 Naming:
 
-- u -> current node
+- u -> current node (state)
 - v -> neighboring node
-- w -> weight
-- d -> distance
-
-Components:
-
-- nodes -> states
-  - distance -> compounded time to reach each state
-- edges -> actions
-- edge weights -> time consumed for action
+- w -> weight of edges (wait time)
+- d -> distance / total weight from start to current node (total wait time)
 
 ------
+## Implementation
 
 Input:
 
@@ -65,7 +72,7 @@ Implementation plan:
 
 - repeat loop till minHeap is empty (while heap)
 
-Reconstruct paths:
+Reconstruct paths (recursive):
 
 -> input: prev, end_state_key, start_key
 
@@ -79,3 +86,18 @@ def getPath(prev, u_key, path, start_key):
 
     getPath(prev, prev_state_key, path, start_key)
     
+Reconstruct paths (iterative):
+
+-> input: prev, end_state_key, start_key
+
+path = []
+next_u_key = end_state_key
+
+while True:
+  if (next_u_key == start_key):
+    return path
+  
+  prev_state_key, prev_action = prev[next_u_key]
+  
+  path = [prev_action] + path
+  next_u_key = prev_state_key
