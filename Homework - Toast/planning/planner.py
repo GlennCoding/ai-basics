@@ -1,3 +1,4 @@
+import heapq
 import random
 from planning.planning_problem import Planning_Problem
 
@@ -89,6 +90,31 @@ class Planner:
         """
         step_count = 0
 
-        # TODO: implement me
+        dist = {start_state: None}
+        prev = {start_state, None}
+        minHeap = [(0, Planner.state_key(start_state))]
 
-        return None, step_count
+        while minHeap:
+            step_count += 1
+            d, u = heapq.heappop(minHeap)
+
+            if d > dist.get(dist.get(u), float("inf")):
+                continue
+
+            if Planning_Problem.goal(u):
+                # TOOO: Implement returning (path, step_count)
+                break
+
+            for action in Planning_Problem.actions:
+                v = Planning_Problem.state_transition(u, action)
+                v_state_key = Planner.state_key(v)
+                v_time = v.time
+
+                nd = d + v_time
+
+                if nd < dist.get(v_state_key, float("inf")):
+                    dist[v_state_key] = nd
+                    prev[v_state_key] = u
+                    heapq.heappush((nd, v_state_key))
+
+            return None, step_count
