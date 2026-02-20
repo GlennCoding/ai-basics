@@ -54,7 +54,7 @@ Implementation plan:
   - add start_state to heap
   
 - pop heap head -> distance (d) & current node (u)
-  - if d > dist[u] -> continue
+  - if current d is outdated, continue (dist[u] contains the nearest distance)
   - if u == goal -> stop
   - loop through adjacent states / neighbouring nodes (v)
     - get new distance (nd = d + w)

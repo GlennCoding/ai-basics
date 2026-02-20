@@ -1,4 +1,5 @@
 import heapq
+from itertools import count
 import random
 from planning.planning_problem import Planning_Problem
 
@@ -89,32 +90,36 @@ class Planner:
         returns (path, step_count) where path is a list of actions to the goal and step_count is the number of states extended
         """
         step_count = 0
+        start_key = Planner.state_key(start_state)
 
-        dist = {start_state: None}
-        prev = {start_state, None}
-        minHeap = [(0, Planner.state_key(start_state))]
+        dist = {start_key: 0}
+        prev = {start_key: (None, None)}
+        counter = count()  # Counter needed because can't order dicts on tie
+        minHeap = [(0, next(counter), start_state)]
 
         while minHeap:
-            step_count += 1
-            d, u = heapq.heappop(minHeap)
+            d, _, u = heapq.heappop(minHeap)
+            u_key = Planner.state_key(u)
 
-            if d > dist.get(dist.get(u), float("inf")):
+            if d != dist.get(u_key, float("inf")):
                 continue
+
+            step_count += 1
 
             if Planning_Problem.goal(u):
                 # TOOO: Implement returning (path, step_count)
-                break
+                return [], step_count
 
             for action in Planning_Problem.actions:
                 v = Planning_Problem.state_transition(u, action)
-                v_state_key = Planner.state_key(v)
-                v_time = v.time
+                v_key = Planner.state_key(v)
+                edge_d = v["time"] - u["time"]
 
-                nd = d + v_time
+                nd = d + edge_d
 
-                if nd < dist.get(v_state_key, float("inf")):
-                    dist[v_state_key] = nd
-                    prev[v_state_key] = u
-                    heapq.heappush((nd, v_state_key))
+                if nd < dist.get(v_key, float("inf")):
+                    dist[v_key] = nd
+                    prev[v_key] = (u_key, action)
+                    heapq.heappush(minHeap, (nd, next(counter), v))
 
-            return None, step_count
+        return None, step_count

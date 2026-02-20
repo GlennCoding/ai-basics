@@ -39,7 +39,9 @@ def test_all(start_state):
 
     test_planner("Random Search", Planner.random_search, start_state)
     test_planner("Breadth First Search", Planner.breadth_first_search, start_state)
-    # test_planner("Shortest Toast Time Search", Planner.shortest_toast_time_search, start_state)
+    test_planner(
+        "Shortest Toast Time Search", Planner.shortest_toast_time_search, start_state
+    )
 
 
 if __name__ == "__main__":
