@@ -64,3 +64,18 @@ Implementation plan:
       - push (nd, v) to minHeap
 
 - repeat loop till minHeap is empty (while heap)
+
+Reconstruct paths:
+
+-> input: prev, end_state_key, start_key
+
+def getPath(prev, u_key, path, start_key):
+    if (u_key == start_key)
+      return path
+    
+    prev_state_key, prev_action = prev[u_key]
+
+    updated_path = [prev_action] + path
+
+    getPath(prev, prev_state_key, path, start_key)
+    

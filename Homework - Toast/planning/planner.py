@@ -107,8 +107,7 @@ class Planner:
             step_count += 1
 
             if Planning_Problem.goal(u):
-                # TOOO: Implement returning (path, step_count)
-                return [], step_count
+                return Planner.get_path(prev, u_key, [], start_key), step_count
 
             for action in Planning_Problem.actions:
                 v = Planning_Problem.state_transition(u, action)
@@ -123,3 +122,14 @@ class Planner:
                     heapq.heappush(minHeap, (nd, next(counter), v))
 
         return None, step_count
+
+    @staticmethod
+    def get_path(prev, u_key, path, start_key):
+        if u_key == start_key:
+            return path
+
+        prev_state_key, prev_action = prev[u_key]
+
+        updated_path = [prev_action] + path
+
+        return Planner.get_path(prev, prev_state_key, updated_path, start_key)
