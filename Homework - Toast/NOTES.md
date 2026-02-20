@@ -18,6 +18,7 @@ Then we repeat, taking a random state, etc. until we find the goal state.
 # Shortest Toast Time Search (via Dijkstra's Algorithm)
 
 Naming:
+
 - u -> current node
 - v -> neighboring node
 - w -> weight
@@ -30,12 +31,18 @@ Components:
 - edges -> actions
 - edge weights -> time consumed for action
 
-- adjacency list -> neighboring states
-- previous state ->
-  - Example: {toaster_has_power: true, ...}, previous state was {toaster_has_power: false, ...}
-- shortest path -> saves the shortest path to each state
+------
 
-- minHeap -> saves the nodes we have to check next
+Input:
+
+- start_state
+
+Initialise:
+
+- dist { state: distance }
+- prev (state & action) ->
+  - Example: For node {toaster_has_power: true, ...} prev node is ({toaster_has_power: false, ...}, action)
+- minHeap (distance, state) -> saves the nodes we have to check next 
 
 Implementation plan:
 
@@ -47,14 +54,12 @@ Implementation plan:
   - add start_state to heap
   
 - pop heap head -> distance (d) & current node (u)
-  - if node == goal, then stop
-  <!-- - get adjacent states (v, w)
-    - how: loop through actions
-      - save them to adjacency list -> adj = { state1: [(sate2, time), (state3, time), ...], state2: ... } -->
+  - if d > dist[u] -> continue
+  - if u == goal -> stop
   - loop through adjacent states / neighbouring nodes (v)
     - get new distance (nd = d + w)
     - if nd smaller than dist.get(v, float(inf))
-      - add nd to distances
+      - for dist v add nd
       - for prev v add u
       - push (nd, v) to minHeap
 
