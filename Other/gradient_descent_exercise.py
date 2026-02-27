@@ -13,11 +13,12 @@ def gradient_descent(starting_x, learning_rate, num_iterations):
     history = [x]
 
     for i in range(num_iterations):
-        # TODO:
-        # 1. Compute the gradient at the current x
-        # 2. Update x using the gradient descent rule
-        # 3. Append the new x to history
-        pass
+        # Take x and see if I should go left or right using the derivative -> by using df(x) rule
+        gradient = df(x)
+        # Calculate new value for x, by doing x +/- learning rate
+        x = x - learning_rate * gradient
+        # Append the new x to history
+        history.append(x)
 
     return x, history
 
