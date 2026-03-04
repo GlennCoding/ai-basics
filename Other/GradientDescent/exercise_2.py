@@ -7,9 +7,23 @@ def f(params):
 def numerical_gradient(f, params, h=1e-7):
     """Estimate gradient for EACH parameter independently."""
     gradients = []
-    for i in range(len(params)):
 
-        pass
+    # f([x,y,z])
+    # Get the slope individually
+    # Change one value, keep the other two
+
+    for i in range(len(params)):
+        # TODO:
+        params_with_step_back = params.copy()  # creates a new list
+        params_with_step_front = params.copy()  # creates a new list
+
+        params_with_step_back[i] -= h
+        params_with_step_front[i] += h
+
+        print(params_with_step_back, params_with_step_front)
+
+        slope = (f(params_with_step_front) - f(params_with_step_back)) / (2 * h)
+        gradients.append(slope)
     return gradients
 
 
@@ -18,15 +32,17 @@ def gradient_descent(f, starting_params, learning_rate, num_iterations):
 
     for i in range(num_iterations):
         # TODO:
-        # 1. Compute gradients using numerical_gradient
-        # 2. Update EACH param: param = param - learning_rate * gradient
-        pass
+        x = params[i]
+        grad = numerical_gradient(f, params, learning_rate)
+        # for each param, go down the slope
+        for g in grad:
+            x = x - learning_rate * g
 
     return params
 
 
 # Start far from the answer
-start = [0.0, 0.0, 0.0]
+start = [0.1, 0.2, 0.3]
 result = gradient_descent(f, start, learning_rate=0.1, num_iterations=100)
 
 print(f"Temperature: {result[0]:.2f}  (target: 20)")
