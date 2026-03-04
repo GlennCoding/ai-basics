@@ -17,7 +17,7 @@ def numerical_gradient(f, params, h=1e-7):
         params_with_step_front = params.copy()
 
         params_with_step_back[i] = params_with_step_back[i] - h
-        params_with_step_front[i] = params_with_step_back[i] + h
+        params_with_step_front[i] = params_with_step_front[i] + h
 
         slope = (f(params_with_step_front) - f(params_with_step_back)) / (2 * h)
         gradients.append(slope)
@@ -28,9 +28,9 @@ def numerical_gradient(f, params, h=1e-7):
 def gradient_descent(f, starting_params, learning_rate, num_iterations):
     params = list(starting_params)
 
-    for i in range(num_iterations):
+    for _ in range(num_iterations):
         # 1. Compute gradients using numerical_gradient
-        gradients = numerical_gradient(f, params, learning_rate)
+        gradients = numerical_gradient(f, params)
 
         # 2. Update EACH param: param = param - learning_rate * gradient
         for i in range(len(params)):
