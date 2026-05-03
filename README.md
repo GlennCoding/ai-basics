@@ -1,6 +1,6 @@
 # SE_14 Artificial Intelligence Basics — Assessment Submission
 
-This repository contains my solutions to the practical exercises for the module **SE_14 Artificial Intelligence Basics**. Each subproject covers one area of AI and is accompanied by the algorithm description required by the assessment template.
+This repository contains my solutions to the practical exercises for the module **SE_14 Artificial Intelligence Basics**. Each subproject covers one area of AI and is accompanied by a short algorithm description.
 
 ---
 
@@ -53,13 +53,13 @@ python main.py
 
 ### Shortest Toast Time Search (Homework-Toast)
 
-**Problem Description:** Given a toaster planning problem, the goal is to find the sequence of actions that reaches the goal state (a fully toasted slice of bread) in the minimum total time. Each state holds a `"time"` attribute, and each action carries a time cost based on the difference in `"time"` between the current and successor state.
+**Problem Description:** The goal of this planning problem is to find the shortest possible path, measured in time in the toasting world. The number rof states the algorithm visits should also be minimized.
 
 **Area of AI:** Planning
 
-**Applied Algorithms:** Dijkstra's Algorithm — a uniform-cost search over the state space using a min-heap priority queue. States are always expanded in order of lowest cumulative time from the start, guaranteeing an optimal solution.
+**Applied Algorithms:** I used Dijkstra's Algorithm to solve this problem. The algorithm finds finds the shortest paths from a single source node to all other nodes in a weighted graph with non-negative edge weights. It uses a greedy approach, iteratively selecting the unvisited node with the smallest tentative distance, updating its neighbors' distances, and marking it visited
 
-**Results:** The algorithm returns the time-optimal action sequence from the start state to the goal, along with the number of states expanded. It outperforms BFS when actions have differing time costs, as BFS only minimises the number of steps, not total time.
+**Results:** Dijkstra's Algorithm was the best algorithm to find the shortest path to toast a toast, as expected. The algortihm did have a longer execution time than BFS, which makes sense, given that it's considering weights and sometimes goes over the same nodes again, when it found quicker overall paths. 
 
 <div align="center"><img src="assets/toast-planning-results.png" /></div>
 
@@ -69,13 +69,13 @@ python main.py
 
 ### Gradient Ascent for Toast Optimization
 
-**Problem Description:** The task is to maximise the utility of a toast-making process by optimising three parameters: `toast_duration` and `wait_duration` (discrete integers) and `power` (continuous). The challenge lies in combining concepts from hill climbing and gradient ascent to handle a mixed discrete/continuous parameter space, while estimating the gradient numerically without analytical access to the underlying utility function.
+**Problem Description:** The goal of this optimisation problem was to maximise an utility value based on the parameters *toast_duration*,  *wait_duration* and *power* by implementing gradient ascent. 
 
 **Area of AI:** Optimization
 
-**Applied Algorithms:** Numerical Gradient Ascent — the gradient of the utility function with respect to each parameter is estimated using the central-difference method `(f(x + h) - f(x - h)) / (2h)`. At each iteration, all three parameters are updated simultaneously by stepping in the direction of their estimated slope, scaled by a fixed learning rate. Discrete parameters are rounded only when calling the utility function, allowing the gradient walk to operate on a continuous internal representation. Bounds checking returns a zero gradient at parameter range edges, and values are clamped to stay within the valid range.
+**Applied Algorithms:** I implemented gradient ascent by looking up the slope of each isolated variable (going a small step to the front and the back) and then walking up the slope for each value. I then calculated the utility value for the three updated params. I repeated this procedure for a number of times that I defined in my program. 
 
-**Results:** The algorithm successfully converges towards high-utility parameter configurations across different start states. By tracking the best-seen utility throughout all iterations (rather than only the final state), the algorithm is robust to overshooting near the optimum. Compared to exhaustive search, gradient ascent reaches comparable utility values significantly faster, especially in the continuous `power` dimension where exhaustive search would require fine-grained discretisation.
+**Results:** The algorithm was able to maximise the utility value to a high precision. Small steps were crucial with gradient ascent and higher number of iterations meant a better result, although with diminishing effects at some point.
 
 <div align="center"><img src="assets/toast-optimisation-results.png" /></div>
 
