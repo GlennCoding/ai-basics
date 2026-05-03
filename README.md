@@ -11,7 +11,8 @@ This repository contains my solutions to the practical exercises for the module 
 ├── README.md                       # This file
 ├── toast-planning/                 # Problem 1 — Planning
 │   └── planning/
-│       └── planner.py              # Contains Planner.shortest_toast_time_search
+│       ├── planner.py              # Contains Planner.shortest_toast_time_search
+│       └── planning_problem.py              # Provided utility function
 └── toast-optimisation/             # Problem 2 — Optimization
     └── optimization/
         ├── optimization_algorithms.py   # Contains Optimization_Algorithms.gradient_ascent
@@ -79,9 +80,3 @@ python main.py
 <div align="center"><img src="assets/toast-optimisation-results.png" /></div>
 
 **Location [(Link)](toast-optimisation/optimization/optimization_algorithms.py):** `Optimization_Algorithms.gradient_ascent` in `optimization/optimization_algorithms.py`, with the helper method `Optimization_Algorithms.numerical_gradient` for central-difference gradient estimation.
-
----
-
-## Repository Access
-
-The code base lives in a version control repository. If the repository is private, access has been granted to the module coordinator under the account associated with their official module email by the time of submission.
