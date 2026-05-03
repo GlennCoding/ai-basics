@@ -133,7 +133,7 @@ class Planner:
 
         updated_path = [prev_action] + path
 
-        return Planner.get_path_recursion(prev, prev_state_key, updated_path, start_key)
+        return Planner.get_path_recursion(prev, prev_state_key, start_key, updated_path)
 
     @staticmethod
     def get_path_iterative(prev, end_state_key, start_key):
@@ -146,4 +146,5 @@ class Planner:
             path_from_end_to_start.append(prev_action)
             next_u_key = prev_state_key
 
-        return path_from_end_to_start.reverse()
+        path_from_end_to_start.reverse()
+        return path_from_end_to_start

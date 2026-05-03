@@ -83,7 +83,7 @@ class Optimization_Algorithms:
         for _ in range(num_iterations):
             slope_toast_duration = cls.numerical_gradient(params, 0, [0, 100], 1)
             slope_wait_duration = cls.numerical_gradient(params, 1, [0, 100], 1)
-            slope_power = cls.numerical_gradient(params, 2, [0, 2], 0.01)
+            slope_power = cls.numerical_gradient(params, 2, [0, 2], 1e-4)
 
             params[0] = max(
                 1, min(100, params[0] + learning_rate * slope_toast_duration)
@@ -107,7 +107,7 @@ class Optimization_Algorithms:
         return best_solution, best_utility
 
     @classmethod
-    def numerical_gradient(cls, params, pos, paramRange: List[int], h=1e-7):
+    def numerical_gradient(cls, params, pos, paramRange: List[int], h=1e-4):
         params_with_step_back = params.copy()
         params_with_step_front = params.copy()
 
