@@ -1,4 +1,4 @@
-# SE_14 Artificial Intelligence Basics — Assessment Submission
+# Artificial Intelligence Basics Problem Solutions
 
 This repository contains my solutions to the practical exercises for the module **SE_14 Artificial Intelligence Basics**. Each subproject covers one area of AI and is accompanied by a short algorithm description.
 
